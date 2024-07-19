@@ -1,0 +1,11 @@
+# Utiliser une image de base
+FROM nginx:alpine
+
+# Copier les fichiers de l'application dans le répertoire de NGINX
+COPY . /usr/share/nginx/html
+
+# Exposer le port 80
+EXPOSE 80
+
+# Démarrer NGINX
+CMD ["nginx", "-g", "daemon off;"]

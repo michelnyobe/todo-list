@@ -1,5 +1,33 @@
 {
-  "devDependencies": {
-    "jest": "^29.7.0"
-  }
+  
+  
+    "devDependencies": {
+  
+      
+    "@testing-library/dom": "^10.3.2",
+  
+      
+    "@testing-library/jest-dom": "^6.4.6",
+  
+      
+    "jest": "^29.7.0",
+  
+      
+    "jest-environment-jsdom": "^29.7.0"
+  
+    },
+    "name": "todo-list-app",
+  
+    "version": "1.0.0",
+  
+    "description": "Une simple application To-Do List.",
+  
+    "main": "index.html",
+  
+    "scripts": {
+  
+      
+    "test": "jest"
+  
+    }
 }

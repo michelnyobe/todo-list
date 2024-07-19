@@ -1,31 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const todoForm = document.getElementById('todo-form');
-    const todoInput = document.getElementById('todo-input');
+document.getElementById('todo-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Sélectionner les éléments du DOM
+    const input = document.getElementById('todo-input');
     const todoList = document.getElementById('todo-list');
 
-    todoForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+    // Obtenir la valeur de l'entrée et la nettoyer
+    const newTodo = input.value.trim();
 
-        const newTodoText = todoInput.value.trim();
-        if (newTodoText !== '') {
-            const newTodo = document.createElement('li');
+    // Ne pas ajouter de tâches vides
+    if (newTodo) {
+        // Créer un nouvel élément de liste
+        const todoItem = document.createElement('li');
+        todoItem.textContent = newTodo;
 
-            const todoText = document.createElement('span');
-            todoText.textContent = newTodoText;
+        // Créer un bouton de suppression
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Supprimer';
+        deleteButton.addEventListener('click', function() {
+            todoItem.remove();
+        });
 
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Supprimer';
-            deleteButton.classList.add('delete');
-            deleteButton.addEventListener('click', function() {
-                todoList.removeChild(newTodo);
-            });
+        // Ajouter le bouton à l'élément de liste
+        todoItem.appendChild(deleteButton);
 
-            newTodo.appendChild(todoText);
-            newTodo.appendChild(deleteButton);
+        // Ajouter l'élément de liste à la liste des tâches
+        todoList.appendChild(todoItem);
 
-            todoList.appendChild(newTodo);
-
-            todoInput.value = '';
-        }
-    });
+        // Réinitialiser le champ de saisie
+        input.value = '';
+    }
 });
