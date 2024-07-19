@@ -1,0 +1,30 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker image
+        run: docker build -t todo-list-app .
+
+      - name: Push Docker image
+        run: docker tag todo-list-app:latest YOUR_DOCKERHUB_USERNAME/todo-list-app:latest
+        run: docker push YOUR_DOCKERHUB_USERNAME/todo-list-app:latest
+
+      - name: Deploy to Server
+        run: |
+          ssh user@server "docker pull YOUR_DOCKERHUB_USERNAME/todo-list-app:latest"
+          ssh user@server "docker stop todo-list-app || true"
+          ssh user@server "docker run -d -p 80:80 --name todo-list-app YOUR_DOCKERHUB_USERNAME/todo-list-app:latest"
