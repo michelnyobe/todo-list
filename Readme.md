@@ -27,5 +27,8 @@ git add .
 
 ### Cloner le Repository
 ```bash
-git clone https://github.com/votre-utilisateur/votre-repository.git
-cd votre-repository
+git clone https://github.com/michelnyobe/todo-list
+cd todo-list
+
+### Installer les Dépendances
+Il n'y a pas de dépendances pour cette application car elle est construite uniquement avec HTML, CSS, et JavaScript.
