@@ -20,11 +20,12 @@ jobs:
         run: docker build -t todo-list-app .
 
       - name: Push Docker image
-        run: docker tag todo-list-app:latest YOUR_DOCKERHUB_USERNAME/todo-list-app:latest
-        run: docker push YOUR_DOCKERHUB_USERNAME/todo-list-app:latest
+        run: |
+          docker tag todo-list-app:latest michelnyobe/todo-list-app:latest
+          docker push michelnyobe/todo-list-app:latest
 
       - name: Deploy to Server
         run: |
-          ssh user@server "docker pull YOUR_DOCKERHUB_USERNAME/todo-list-app:latest"
+          ssh user@server "docker pull michelnyobe/todo-list-app:latest"
           ssh user@server "docker stop todo-list-app || true"
-          ssh user@server "docker run -d -p 80:80 --name todo-list-app YOUR_DOCKERHUB_USERNAME/todo-list-app:latest"
+          ssh user@server "docker run -d -p 80:80 --name todo-list-app michelnyobe/todo-list-app:latest"
