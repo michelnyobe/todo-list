@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             todoText.textContent = newTodoText;
 
             const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
+            deleteButton.textContent = 'Supprimer';
             deleteButton.classList.add('delete');
             deleteButton.addEventListener('click', function() {
                 todoList.removeChild(newTodo);
