@@ -16,6 +16,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Log in to Docker Hub
+        run: echo "michelnyobe" | docker login -u "Mandeng123" --password-stdin
+
       - name: Build Docker image
         run: docker build -t todo-list-app .
 
@@ -25,7 +28,14 @@ jobs:
           docker push michelnyobe/todo-list-app:latest
 
       - name: Deploy to Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
         run: |
-          ssh user@server "docker pull michelnyobe/todo-list-app:latest"
-          ssh user@server "docker stop todo-list-app || true"
-          ssh user@server "docker run -d -p 80:80 --name todo-list-app michelnyobe/todo-list-app:latest"
+          echo "$SSH_PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull michelnyobe/todo-list-app:latest"
+          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker stop todo-list-app || true"
+          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name todo-list-app michelnyobe/todo-list-app:latest"
+          rm private_key.pem
