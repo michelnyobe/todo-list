@@ -17,6 +17,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Run tests
+        run: npm test
+
       - name: Log in to Docker Hub
         run: echo "Mandeng123" | docker login -u "michelnyobe" --password-stdin
 
