@@ -29,7 +29,7 @@ jobs:
         run: npm test
 
       - name: Log in to Docker Hub
-        run: echo "Mandeng123" | docker login -u "michelnyobe" --password-stdin
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker image
         run: docker build -t todo-list-app .
