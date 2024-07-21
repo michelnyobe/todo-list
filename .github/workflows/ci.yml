@@ -38,16 +38,3 @@ jobs:
         run: |
           docker tag todo-list-app:latest michelnyobe/todo-list-app:latest
           docker push michelnyobe/todo-list-app:latest
-
-      - name: Deploy to Server
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-        run: |
-          echo "$SSH_PRIVATE_KEY" > private_key.pem
-          chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull michelnyobe/todo-list-app:latest"
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker stop todo-list-app || true"
-          ssh -i private_key.pem -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name todo-list-app michelnyobe/todo-list-app:latest"
-          rm private_key.pem
