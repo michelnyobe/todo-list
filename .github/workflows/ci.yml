@@ -21,7 +21,7 @@ jobs:
         run: echo "Mandeng123" | docker login -u "michelnyobe" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t michelnyobe/todo-list-app:latest .
+        run: docker build -t todo-list-app .
 
       - name: Push Docker image
         run: |
